@@ -10,6 +10,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - **TypeScript** - Type safety with strict configuration
 - **Vite** - Lightning-fast build tool and dev server
 - **Pinia** - Official state management library
+- **Vitest** - Fast unit testing framework
 - **Playwright** - End-to-end testing framework
 - **Husky** - Git hooks for code quality
 - **Prettier** - Automatic code formatting
@@ -18,6 +19,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 ## Development Commands
 
 ### Building and Running
+
 ```bash
 pnpm dev          # Start development server
 pnpm build        # Build for production
@@ -25,7 +27,15 @@ pnpm preview      # Preview production build
 ```
 
 ### Testing
+
 ```bash
+# Unit Tests (Vitest)
+pnpm test               # Run unit tests in watch mode
+pnpm test:ui            # Run unit tests with interactive UI
+pnpm test:run           # Run unit tests once
+pnpm test:coverage      # Run unit tests with coverage
+
+# E2E Tests (Playwright)
 pnpm test:e2e           # Run e2e tests (headless)
 pnpm test:e2e:ui        # Run e2e tests in UI mode
 pnpm test:e2e:headed    # Run e2e tests with visible browser
@@ -42,28 +52,28 @@ This project includes [Pinia](https://pinia.vuejs.org/), Vue's official state ma
 Create stores in the `src/stores/` directory using the composition API:
 
 ```typescript
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { defineStore } from 'pinia';
+import { ref, computed } from 'vue';
 
 export const useMyStore = defineStore('myStore', () => {
-  const state = ref(initialValue)
-  const derived = computed(() => state.value * 2)
+  const state = ref(initialValue);
+  const derived = computed(() => state.value * 2);
 
   function updateState(value: string) {
-    state.value = value
+    state.value = value;
   }
 
-  return { state, derived, updateState }
-})
+  return { state, derived, updateState };
+});
 ```
 
 ### Using Stores in Components
 
 ```vue
 <script setup lang="ts">
-import { useMyStore } from '@/stores/myStore'
+import { useMyStore } from '@/stores/myStore';
 
-const store = useMyStore()
+const store = useMyStore();
 </script>
 
 <template>
@@ -82,6 +92,104 @@ const store = useMyStore()
 - **Module Organization**: Stores are naturally organized as separate modules in the `src/stores/` directory
 
 For more information, visit the [Pinia Documentation](https://pinia.vuejs.org/).
+
+## Unit Testing with Vitest
+
+This project uses [Vitest](https://vitest.dev/) for fast unit testing of Vue components, Pinia stores, and utility functions.
+
+### Running Unit Tests
+
+```bash
+# Watch mode (recommended for development)
+pnpm test
+
+# Interactive UI mode for exploring and debugging tests
+pnpm test:ui
+
+# Run all tests once (useful for CI)
+pnpm test:run
+
+# Generate coverage report
+pnpm test:coverage
+```
+
+### Writing Unit Tests
+
+Tests are co-located with their source files using the `*.test.ts` naming convention:
+
+**Example: Testing a Vue Component**
+
+```typescript
+// src/components/HelloWorld.test.ts
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import HelloWorld from './HelloWorld.vue';
+
+describe('HelloWorld', () => {
+  it('renders prop.msg when passed', () => {
+    const msg = 'Hello Vitest!';
+    const wrapper = mount(HelloWorld, { props: { msg } });
+    expect(wrapper.text()).toContain(msg);
+  });
+
+  it('increments count when button is clicked', async () => {
+    const wrapper = mount(HelloWorld, { props: { msg: 'Test' } });
+    const button = wrapper.find('button');
+
+    await button.trigger('click');
+    expect(wrapper.text()).toContain('count is 1');
+  });
+});
+```
+
+**Example: Testing a Pinia Store**
+
+```typescript
+// src/stores/counter.test.ts
+import { describe, it, expect, beforeEach } from 'vitest';
+import { setActivePinia, createPinia } from 'pinia';
+import { useCounterStore } from './counter';
+
+describe('Counter Store', () => {
+  beforeEach(() => {
+    setActivePinia(createPinia());
+  });
+
+  it('increments counter', () => {
+    const store = useCounterStore();
+    expect(store.count).toBe(0);
+
+    store.increment();
+    expect(store.count).toBe(1);
+  });
+});
+```
+
+### Test File Organization
+
+- **Component tests**: `src/components/MyComponent.test.ts` (next to `MyComponent.vue`)
+- **Store tests**: `src/stores/myStore.test.ts` (next to `myStore.ts`)
+- **Utility tests**: `src/utils/helpers.test.ts` (next to `helpers.ts`)
+
+### Best Practices
+
+- **Co-locate tests**: Keep test files next to the code they test for better organization
+- **Test behavior**: Focus on testing component behavior, not implementation details
+- **Use Vue Test Utils**: Leverage `mount()` for component testing and wrapper utilities
+- **Async testing**: Use `async/await` when testing asynchronous operations
+- **Mock dependencies**: Mock external dependencies to isolate unit tests
+- **Descriptive names**: Use clear, descriptive test names that explain what is being tested
+
+### Configuration
+
+Vitest is configured in `vitest.config.ts`:
+
+- **Test environment**: `jsdom` for browser-like testing
+- **Global APIs**: `describe`, `it`, `expect` available without imports
+- **Coverage**: v8 provider with HTML, JSON, and text reports
+- **Watch mode**: Automatically re-runs tests on file changes
+
+For more information, visit the [Vitest Documentation](https://vitest.dev/).
 
 ## E2E Testing with Playwright
 
@@ -153,8 +261,8 @@ This project uses Husky to enforce code quality standards and comprehensive comm
 
 Before each commit, the following checks run automatically via `lint-staged`:
 
-- **Type Checking**: All TypeScript and Vue files are checked for type errors
 - **Code Formatting**: All staged files are automatically formatted with Prettier
+- **Unit Tests**: Changed test files trigger related unit tests with Vitest
 
 ### Commit Message Convention
 
@@ -163,6 +271,7 @@ All commit messages must follow the [Conventional Commits](https://www.conventio
 **Format**: `type(scope): subject`
 
 **Required Types**:
+
 - `feat` - New feature
 - `fix` - Bug fix
 - `docs` - Documentation changes
@@ -176,6 +285,7 @@ All commit messages must follow the [Conventional Commits](https://www.conventio
 - `revert` - Revert a previous commit
 
 **Examples**:
+
 ```bash
 git commit -m "feat(auth): add user login functionality"
 git commit -m "fix(store): correct state mutation in counter store"
@@ -184,12 +294,14 @@ git commit -m "refactor(components): simplify button component logic"
 ```
 
 **Commit Message Rules**:
+
 - Type must be lowercase and from the allowed list
 - Subject cannot be empty
 - Subject cannot end with a period
 - Subject cannot start with uppercase
 
 If your commit message doesn't follow these rules, the commit will be rejected with a detailed error message that includes:
+
 - **The exact reason** for rejection
 - **Complete list** of all allowed commit types with French descriptions
 - **Examples** of valid and invalid commit messages
@@ -198,6 +310,7 @@ If your commit message doesn't follow these rules, the commit will be rejected w
 ### Code Formatting
 
 Prettier is configured with the following settings:
+
 - Single quotes
 - 2-space indentation
 - Semicolons enabled
@@ -206,6 +319,7 @@ Prettier is configured with the following settings:
 - LF line endings
 
 You can manually format files by running:
+
 ```bash
 pnpm exec prettier --write .
 ```
@@ -213,6 +327,7 @@ pnpm exec prettier --write .
 ### Bypassing Hooks (Not Recommended)
 
 In exceptional cases, you can bypass the hooks with:
+
 ```bash
 git commit --no-verify -m "your message"
 ```

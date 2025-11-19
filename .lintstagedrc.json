@@ -1,5 +1,6 @@
 {
   "src/**/*.{ts,tsx,vue}": ["prettier --write"],
+  "src/**/*.test.ts": ["vitest run --run --changed"],
   "e2e/**/*.spec.ts": ["prettier --write"],
   "*.{js,json,md}": ["prettier --write"]
 }
