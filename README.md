@@ -1,20 +1,40 @@
-# Vue 3 + TypeScript + Vite + Pinia
+# Vue 3 + TypeScript + Vite + Pinia (DDD Template)
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This template provides a production-ready Vue 3 application with **Domain-Driven Design (DDD)** architecture. It includes TypeScript, comprehensive testing, and code quality tools.
 
 Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
 
 ## Features
 
+- **🏗️ DDD Architecture** - Domain-Driven Design with layered architecture (Domain, Application, Infrastructure, UI)
 - **Vue 3** - Latest Vue framework with Composition API
 - **TypeScript** - Type safety with strict configuration
 - **Vite** - Lightning-fast build tool and dev server
 - **Pinia** - Official state management library
+- **ESLint** - Code quality and best practices enforcement
 - **Vitest** - Fast unit testing framework
 - **Playwright** - End-to-end testing framework
 - **Husky** - Git hooks for code quality
 - **Prettier** - Automatic code formatting
 - **Commitlint** - Conventional commit messages
+
+## Architecture
+
+This template follows **Domain-Driven Design (DDD)** principles. See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed documentation.
+
+### Project Structure
+
+```
+src/
+├── modules/          # Business modules (bounded contexts)
+│   └── Welcome/      # Example module with Counter
+│       ├── domain/           # Pure business logic
+│       ├── application/      # Use cases
+│       ├── infrastructure/   # External services
+│       └── ui/              # Vue components
+├── shared/           # Shared kernel
+└── ui/              # Generic UI components
+```
 
 ## Development Commands
 
@@ -22,6 +42,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 
 ```bash
 pnpm dev          # Start development server
+pnpm lint         # Run ESLint
 pnpm build        # Build for production
 pnpm preview      # Preview production build
 ```
