@@ -1,0 +1,8 @@
+{
+  "*.{ts,tsx,vue}": [
+    "vue-tsc --noEmit"
+  ],
+  "*.{js,ts,vue,json,md}": [
+    "prettier --write"
+  ]
+}
