@@ -17,10 +17,11 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - **Husky** - Git hooks for code quality
 - **Prettier** - Automatic code formatting
 - **Commitlint** - Conventional commit messages
+- **Docker** - Containerization with multi-stage builds
 
 ## Architecture
 
-This template follows **Domain-Driven Design (DDD)** principles. See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed documentation.
+This template follows **Domain-Driven Design (DDD)** principles. See [ARCHITECTURE.md](./docs/ARCHITECTURE.md) for detailed documentation.
 
 ### Project Structure
 
@@ -63,6 +64,29 @@ pnpm test:e2e:headed    # Run e2e tests with visible browser
 pnpm test:e2e:debug     # Run e2e tests in debug mode
 pnpm test:e2e:report    # View test reports
 ```
+
+## Docker Deployment
+
+This project includes full Docker support for containerization and deployment. See [DOCKER.md](./docs/DOCKER.md) for comprehensive documentation.
+
+### Quick Start
+
+```bash
+# Build and run with Docker Compose
+docker-compose up -d
+
+# Access the application
+# Production: http://localhost:8080
+# Development: http://localhost:5173 (with --profile dev)
+```
+
+### Key Features
+
+- **Multi-stage builds** for optimized production images (~50-60 MB)
+- **Development mode** with hot-reload support
+- **Nginx** configuration for SPA routing
+- **Health checks** and security headers
+- **Docker Compose** for easy orchestration
 
 ## State Management with Pinia
 
