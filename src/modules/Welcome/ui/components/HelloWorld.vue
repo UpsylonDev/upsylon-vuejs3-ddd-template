@@ -58,6 +58,8 @@ const { count, increment, decrement, reset, isZero } = useCounter(0);
 
 .reset-btn {
   margin-top: 0.5rem;
+  background-color: red;
+  color: white;
 }
 
 button:disabled {
