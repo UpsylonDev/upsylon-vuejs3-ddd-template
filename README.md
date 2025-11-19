@@ -4,6 +4,35 @@ This template should help get you started developing with Vue 3 and TypeScript i
 
 Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
 
+## Features
+
+- **Vue 3** - Latest Vue framework with Composition API
+- **TypeScript** - Type safety with strict configuration
+- **Vite** - Lightning-fast build tool and dev server
+- **Pinia** - Official state management library
+- **Playwright** - End-to-end testing framework
+- **Husky** - Git hooks for code quality
+- **Prettier** - Automatic code formatting
+- **Commitlint** - Conventional commit messages
+
+## Development Commands
+
+### Building and Running
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm preview      # Preview production build
+```
+
+### Testing
+```bash
+pnpm test:e2e           # Run e2e tests (headless)
+pnpm test:e2e:ui        # Run e2e tests in UI mode
+pnpm test:e2e:headed    # Run e2e tests with visible browser
+pnpm test:e2e:debug     # Run e2e tests in debug mode
+pnpm test:e2e:report    # View test reports
+```
+
 ## State Management with Pinia
 
 This project includes [Pinia](https://pinia.vuejs.org/), Vue's official state management library. Pinia provides a simplified, more intuitive API compared to Vuex.
@@ -53,6 +82,68 @@ const store = useMyStore()
 - **Module Organization**: Stores are naturally organized as separate modules in the `src/stores/` directory
 
 For more information, visit the [Pinia Documentation](https://pinia.vuejs.org/).
+
+## E2E Testing with Playwright
+
+This project uses [Playwright](https://playwright.dev/) for end-to-end testing across multiple browsers.
+
+### Running Tests
+
+```bash
+# Run all tests in headless mode
+pnpm test:e2e
+
+# Run tests with interactive UI (recommended for development)
+pnpm test:e2e:ui
+
+# Run tests with visible browser windows
+pnpm test:e2e:headed
+
+# Debug tests with Playwright Inspector
+pnpm test:e2e:debug
+
+# View HTML test report
+pnpm test:e2e:report
+```
+
+### Writing Tests
+
+Tests are located in the `e2e/` directory and use the `.spec.ts` extension:
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test.describe('Feature Name', () => {
+  test('should perform an action', async ({ page }) => {
+    await page.goto('/');
+
+    const button = page.getByRole('button', { name: /click me/i });
+    await expect(button).toBeVisible();
+    await button.click();
+
+    await expect(page.getByText('Success')).toBeVisible();
+  });
+});
+```
+
+### Best Practices
+
+- **Use semantic locators**: Prefer `getByRole()`, `getByLabel()`, `getByText()` over CSS selectors
+- **Group related tests**: Use `test.describe()` to organize test suites
+- **Wait for stability**: Use `waitForLoadState()` or wait for specific elements before assertions
+- **Keep tests independent**: Each test should be able to run in isolation
+- **Use test hooks**: Utilize `beforeEach()` and `afterEach()` for common setup/cleanup
+
+### Configuration
+
+The Playwright configuration is defined in `playwright.config.ts`:
+
+- **Browser coverage**: Tests run on Chromium, Firefox, and WebKit
+- **Parallel execution**: Tests run in parallel for faster feedback
+- **Auto-start dev server**: The Vite dev server starts automatically before tests
+- **Base URL**: Configured to `http://localhost:5173`
+
+For more information, visit the [Playwright Documentation](https://playwright.dev/).
 
 ## Git Hooks & Code Quality
 

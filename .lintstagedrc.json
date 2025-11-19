@@ -2,6 +2,9 @@
   "*.{ts,tsx,vue}": [
     "vue-tsc --noEmit"
   ],
+  "e2e/**/*.spec.ts": [
+    "prettier --write"
+  ],
   "*.{js,ts,vue,json,md}": [
     "prettier --write"
   ]

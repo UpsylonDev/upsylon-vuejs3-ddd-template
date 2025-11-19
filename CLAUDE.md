@@ -13,6 +13,13 @@ This is a Vue 3 + TypeScript + Vite template using Domain-Driven Design (DDD) pr
 - `npm run build` (or `pnpm build`) - Build the project with TypeScript checking and Vite optimization
 - `npm run preview` (or `pnpm preview`) - Preview the production build locally
 
+### Testing
+- `npm run test:e2e` (or `pnpm test:e2e`) - Run e2e tests with Playwright
+- `npm run test:e2e:ui` (or `pnpm test:e2e:ui`) - Run e2e tests in UI mode
+- `npm run test:e2e:headed` (or `pnpm test:e2e:headed`) - Run e2e tests with visible browser
+- `npm run test:e2e:debug` (or `pnpm test:e2e:debug`) - Run e2e tests in debug mode
+- `npm run test:e2e:report` (or `pnpm test:e2e:report`) - Show the HTML test report
+
 ### Package Manager
 The project uses **pnpm** as the package manager (see `pnpm-workspace.yaml`). Use `pnpm` commands instead of `npm` or `yarn`.
 
@@ -25,8 +32,10 @@ src/
   ├── style.css         # Global styles
   ├── components/       # Vue SFC components
   └── stores/           # Pinia stores (composition API style)
+e2e/                    # Playwright e2e tests
 public/                 # Static assets
 vite.config.ts         # Vite configuration (Vue plugin enabled)
+playwright.config.ts   # Playwright configuration
 tsconfig.json          # TypeScript root config (references other configs)
 tsconfig.app.json      # App-level TypeScript configuration
 tsconfig.node.json     # Build tools TypeScript configuration
@@ -74,6 +83,47 @@ export const useMyStore = defineStore('myStore', () => {
 })
 ```
 
+## E2E Testing with Playwright
+
+The project uses **Playwright** for end-to-end testing:
+
+### Playwright Configuration
+- **Test directory**: `e2e/` - All e2e tests are located here
+- **Test files**: `*.spec.ts` - Test files follow the `*.spec.ts` naming convention
+- **Browser targets**: Chromium, Firefox, and WebKit (Safari)
+- **Base URL**: `http://localhost:5173` - Configured to test the Vite dev server
+- **Auto-start server**: Dev server starts automatically before tests run
+- **Parallel execution**: Tests run in parallel for faster execution
+- **CI optimization**: Retries and single-worker mode on CI environments
+
+### Writing Tests
+Test files should be placed in the `e2e/` directory with the `.spec.ts` extension:
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test.describe('Feature Name', () => {
+  test('should do something', async ({ page }) => {
+    await page.goto('/');
+    // Your test assertions
+  });
+});
+```
+
+### Running Tests
+- **Headless mode**: `pnpm test:e2e` - Run all tests in headless browsers
+- **UI mode**: `pnpm test:e2e:ui` - Interactive UI for debugging and watching tests
+- **Headed mode**: `pnpm test:e2e:headed` - Run tests with visible browser windows
+- **Debug mode**: `pnpm test:e2e:debug` - Run tests with Playwright Inspector for debugging
+- **View reports**: `pnpm test:e2e:report` - Open the HTML test report
+
+### Best Practices
+- Use `test.describe()` to group related tests
+- Use semantic locators like `getByRole()`, `getByLabel()` instead of CSS selectors
+- Wait for network idle or specific elements before making assertions
+- Keep tests focused and independent of each other
+- Use `test.beforeEach()` for common setup steps
+
 ## Git Hooks & Code Quality
 
 The project uses **Husky** for Git hooks to ensure comprehensive commits and code quality:
@@ -91,6 +141,7 @@ The project uses **Husky** for Git hooks to ensure comprehensive commits and cod
 ### Lint-Staged
 Automatically runs checks on staged files before committing:
 - **TypeScript files** (`.ts`, `.tsx`, `.vue`) - Type checking with `vue-tsc`
+- **E2E test files** (`e2e/**/*.spec.ts`) - Auto-formatting with Prettier
 - **All files** (`.js`, `.ts`, `.vue`, `.json`, `.md`) - Auto-formatting with Prettier
 
 ### Commit Message Convention
@@ -149,6 +200,10 @@ Code formatting settings (`.prettierrc.json`):
 - `@commitlint/config-conventional@^20.0.0` - Conventional commits configuration
 - `lint-staged@^16.2.6` - Run commands on staged files
 - `prettier@^3.6.2` - Code formatter
+
+### Testing
+- `@playwright/test@^1.56.1` - Playwright test runner
+- `playwright@^1.56.1` - Playwright browser automation library
 
 ## IMPORTANT
 - When structural changes are made, update the README.md
