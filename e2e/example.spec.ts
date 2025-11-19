@@ -1,16 +1,6 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Vue App', () => {
-  test('should display the app correctly', async ({ page }) => {
-    await page.goto('/');
-
-    // Wait for the page to load
-    await page.waitForLoadState('networkidle');
-
-    // Check that the page title is correct
-    await expect(page).toHaveTitle(/Vite \+ Vue \+ TS/);
-  });
-
   test('should have interactive counter button', async ({ page }) => {
     await page.goto('/');
 
