@@ -13,18 +13,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+<<<<<<< HEAD
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '9'
           run_install: false
 
+=======
+>>>>>>> 6e522ea (chore: install Ci lauch tests)
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'pnpm'
 
+<<<<<<< HEAD
+=======
+      - name: Install pnpm
+        run: npm i -g pnpm
+
+>>>>>>> 6e522ea (chore: install Ci lauch tests)
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
