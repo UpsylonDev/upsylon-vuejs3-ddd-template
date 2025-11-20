@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useCounter } from '../../application/useCounter';
+  import { useCounter } from '../../application/useCounter'
 
-defineProps<{ msg: string }>();
+  defineProps<{ msg: string }>()
 
-const { count, increment, decrement, reset, isZero } = useCounter(0);
+  const { count, increment, decrement, reset, isZero } = useCounter(0)
 </script>
 
 <template>
@@ -11,11 +11,11 @@ const { count, increment, decrement, reset, isZero } = useCounter(0);
 
   <div class="card">
     <div class="counter-controls">
-      <button type="button" @click="decrement" :disabled="isZero">-</button>
+      <button type="button" :disabled="isZero" @click="decrement">-</button>
       <span class="counter-display">{{ count }}</span>
       <button type="button" @click="increment">+</button>
     </div>
-    <button type="button" @click="reset" class="reset-btn">Reset</button>
+    <button type="button" class="reset-btn" @click="reset">Reset</button>
     <p>
       This counter uses <strong>DDD architecture</strong>:
       <code>Domain → Application → UI</code>
@@ -37,28 +37,28 @@ const { count, increment, decrement, reset, isZero } = useCounter(0);
 </template>
 
 <style scoped lang="sass">
-.read-the-docs
-  color: #888
+  .read-the-docs
+    color: #888
 
-.counter-controls
-  display: flex
-  gap: 1rem
-  align-items: center
-  justify-content: center
-  margin-bottom: 1rem
+  .counter-controls
+    display: flex
+    gap: 1rem
+    align-items: center
+    justify-content: center
+    margin-bottom: 1rem
 
-.counter-display
-  font-size: 2rem
-  font-weight: bold
-  min-width: 3rem
-  text-align: center
+  .counter-display
+    font-size: 2rem
+    font-weight: bold
+    min-width: 3rem
+    text-align: center
 
-.reset-btn
-  margin-top: 0.5rem
-  background-color: red
-  color: white
+  .reset-btn
+    margin-top: 0.5rem
+    background-color: red
+    color: white
 
-button:disabled
-  opacity: 0.5
-  cursor: not-allowed
+  button:disabled
+    opacity: 0.5
+    cursor: not-allowed
 </style>
