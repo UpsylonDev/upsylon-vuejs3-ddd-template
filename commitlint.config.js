@@ -25,4 +25,4 @@ export default {
     'type-empty': [2, 'never'],
     'scope-case': [2, 'always', 'lower-case'],
   },
-};
+}

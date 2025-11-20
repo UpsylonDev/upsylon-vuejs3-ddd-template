@@ -97,28 +97,28 @@ This project includes [Pinia](https://pinia.vuejs.org/), Vue's official state ma
 Create stores in the `src/stores/` directory using the composition API:
 
 ```typescript
-import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
 
 export const useMyStore = defineStore('myStore', () => {
-  const state = ref(initialValue);
-  const derived = computed(() => state.value * 2);
+  const state = ref(initialValue)
+  const derived = computed(() => state.value * 2)
 
   function updateState(value: string) {
-    state.value = value;
+    state.value = value
   }
 
-  return { state, derived, updateState };
-});
+  return { state, derived, updateState }
+})
 ```
 
 ### Using Stores in Components
 
 ```vue
 <script setup lang="ts">
-import { useMyStore } from '@/stores/myStore';
+  import { useMyStore } from '@/stores/myStore'
 
-const store = useMyStore();
+  const store = useMyStore()
 </script>
 
 <template>
@@ -166,48 +166,48 @@ Tests are co-located with their source files using the `*.test.ts` naming conven
 
 ```typescript
 // src/components/HelloWorld.test.ts
-import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils';
-import HelloWorld from './HelloWorld.vue';
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import HelloWorld from './HelloWorld.vue'
 
 describe('HelloWorld', () => {
   it('renders prop.msg when passed', () => {
-    const msg = 'Hello Vitest!';
-    const wrapper = mount(HelloWorld, { props: { msg } });
-    expect(wrapper.text()).toContain(msg);
-  });
+    const msg = 'Hello Vitest!'
+    const wrapper = mount(HelloWorld, { props: { msg } })
+    expect(wrapper.text()).toContain(msg)
+  })
 
   it('increments count when button is clicked', async () => {
-    const wrapper = mount(HelloWorld, { props: { msg: 'Test' } });
-    const button = wrapper.find('button');
+    const wrapper = mount(HelloWorld, { props: { msg: 'Test' } })
+    const button = wrapper.find('button')
 
-    await button.trigger('click');
-    expect(wrapper.text()).toContain('count is 1');
-  });
-});
+    await button.trigger('click')
+    expect(wrapper.text()).toContain('count is 1')
+  })
+})
 ```
 
 **Example: Testing a Pinia Store**
 
 ```typescript
 // src/stores/counter.test.ts
-import { describe, it, expect, beforeEach } from 'vitest';
-import { setActivePinia, createPinia } from 'pinia';
-import { useCounterStore } from './counter';
+import { describe, it, expect, beforeEach } from 'vitest'
+import { setActivePinia, createPinia } from 'pinia'
+import { useCounterStore } from './counter'
 
 describe('Counter Store', () => {
   beforeEach(() => {
-    setActivePinia(createPinia());
-  });
+    setActivePinia(createPinia())
+  })
 
   it('increments counter', () => {
-    const store = useCounterStore();
-    expect(store.count).toBe(0);
+    const store = useCounterStore()
+    expect(store.count).toBe(0)
 
-    store.increment();
-    expect(store.count).toBe(1);
-  });
-});
+    store.increment()
+    expect(store.count).toBe(1)
+  })
+})
 ```
 
 ### Test File Organization
@@ -264,19 +264,19 @@ pnpm test:e2e:report
 Tests are located in the `e2e/` directory and use the `.spec.ts` extension:
 
 ```typescript
-import { test, expect } from '@playwright/test';
+import { test, expect } from '@playwright/test'
 
 test.describe('Feature Name', () => {
   test('should perform an action', async ({ page }) => {
-    await page.goto('/');
+    await page.goto('/')
 
-    const button = page.getByRole('button', { name: /click me/i });
-    await expect(button).toBeVisible();
-    await button.click();
+    const button = page.getByRole('button', { name: /click me/i })
+    await expect(button).toBeVisible()
+    await button.click()
 
-    await expect(page.getByText('Success')).toBeVisible();
-  });
-});
+    await expect(page.getByText('Success')).toBeVisible()
+  })
+})
 ```
 
 ### Best Practices
