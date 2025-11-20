@@ -35,6 +35,42 @@ This is a Vue 3 + TypeScript + Vite template using Domain-Driven Design (DDD) pr
 
 The project uses **pnpm** as the package manager (see `pnpm-workspace.yaml`). Use `pnpm` commands instead of `npm` or `yarn`.
 
+### Docker
+
+The project includes Docker support for both development and production environments:
+
+#### Docker Commands (via Makefile)
+
+- `make build` - Build production Docker image
+- `make build-dev` - Build development Docker image
+- `make run` - Run production container on port 8080
+- `make run-dev` - Run development container with hot-reload on port 5173
+- `make stop` - Stop and remove production container
+- `make stop-dev` - Stop and remove development container
+- `make logs` - Show production container logs
+- `make logs-dev` - Show development container logs
+- `make shell` - Open shell in production container
+- `make shell-dev` - Open shell in development container
+- `make clean` - Remove all containers and images
+- `make rebuild` - Clean, rebuild and run production container
+- `make rebuild-dev` - Clean, rebuild and run development container
+- `make health` - Check container health status
+- `make test` - Test the application endpoint
+- `make prune` - Remove all unused Docker resources
+
+#### Docker Compose Commands
+
+- `make compose-up` - Start production service with docker-compose
+- `make compose-dev` - Start development service with docker-compose (using `dev` profile)
+- `make compose-down` - Stop docker-compose services
+- `make compose-logs` - Show docker-compose logs
+
+#### Configuration Files
+
+- `Dockerfile` - Production image configuration
+- `Dockerfile.dev` - Development image configuration with hot-reload support
+- `docker-compose.yml` - Multi-service orchestration (production and optional dev service)
+
 ## Project Structure
 
 ```
