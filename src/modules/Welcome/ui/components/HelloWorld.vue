@@ -36,34 +36,29 @@ const { count, increment, decrement, reset, isZero } = useCounter(0);
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
 </template>
 
-<style scoped>
-.read-the-docs {
-  color: #888;
-}
+<style scoped lang="sass">
+.read-the-docs
+  color: #888
 
-.counter-controls {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
+.counter-controls
+  display: flex
+  gap: 1rem
+  align-items: center
+  justify-content: center
+  margin-bottom: 1rem
 
-.counter-display {
-  font-size: 2rem;
-  font-weight: bold;
-  min-width: 3rem;
-  text-align: center;
-}
+.counter-display
+  font-size: 2rem
+  font-weight: bold
+  min-width: 3rem
+  text-align: center
 
-.reset-btn {
-  margin-top: 0.5rem;
-  background-color: red;
-  color: white;
-}
+.reset-btn
+  margin-top: 0.5rem
+  background-color: red
+  color: white
 
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+button:disabled
+  opacity: 0.5
+  cursor: not-allowed
 </style>
